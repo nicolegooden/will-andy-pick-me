@@ -3,6 +3,7 @@ var buttonGetAnswer = document.querySelector('.button-get-answer');
 var answer = document.querySelector('.answer');
 var userQuestion = document.querySelector('.user-question');
 var ball = document.querySelector('.image-eight-ball');
+var buttonClear = document.querySelector('.button-clear');
 
 var randomAnswers = [
   "It is certain.",
@@ -28,12 +29,21 @@ var randomAnswers = [
 ];
 
 buttonGetAnswer.addEventListener('click', showOutcome);
+buttonClear.addEventListener('click', clearMessage)
 
 function showOutcome() {
-  userQuestion.innerText = inputQuestion.value;
-  answer.innerText = getRandomAnswer(randomAnswers);
-  removeBall();
-  inputQuestion.value = '';
+  if (buttonGetAnswer.disabled) {
+    buttonGetAnswer.disabled = false;
+  }
+
+  if (!(inputQuestion.value === '')) {
+    userQuestion.innerText = inputQuestion.value;
+    answer.innerText = getRandomAnswer(randomAnswers);
+    removeBall();
+    inputQuestion.value = '';
+  } else {
+    buttonGetAnswer.disabled = true;
+  }
 };
 
 function getRandomAnswer(array) {
@@ -42,4 +52,16 @@ function getRandomAnswer(array) {
 
 function removeBall() {
   ball.classList.add('hidden');
+};
+
+function clearMessage() {
+  if (!(userQuestion.innerText === '' || answer.innerText === '')) {
+    userQuestion.innerText = '';
+    answer.innerText = '';
+    addBall();
+  }
+};
+
+function addBall() {
+  ball.classList.remove('hidden');
 };
